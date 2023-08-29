@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>  Harimau Merdeka  Malaysia</title>
+    <title>Harimau Merdeka Malaysia</title>
     <style>
       body {
         font-family: cursive;
+        touch-action: manipulation;
+      }
+      img{
+        cursor: pointer;
       }
       body.flag {
         background-image: linear-gradient(
@@ -33,6 +37,9 @@
           1px 1px 0 black;
       }
       p,
+      h3,
+      h4,
+      h2,
       .menu-content,
       .game-title {
         text-align: center;
@@ -47,7 +54,9 @@
         flex-direction: row;
         overflow-x: auto;
       }
-
+      .text-underline {
+        text-decoration: underline;
+      }
       .game-menu img,
       .legend-menu img {
         width: 300px;
@@ -174,14 +183,18 @@
       <!-- Modal content -->
       <div class="modal-content">
         <span class="close">&times;</span>
-        <a  href="https://github.com/dragonjump/harimau-merdeka"  target="_blank">
-          <svg 
+        <a href="https://github.com/dragonjump/harimau-merdeka" target="_blank">
+          <svg
             class="github-icon"
             viewBox="0 0 16 16"
             version="1.1"
             aria-hidden="true"
-            style="width: 80px; border-radius: 50%; background: white;
-            border: solid transparent;"
+            style="
+              width: 80px;
+              border-radius: 50%;
+              background: white;
+              border: solid transparent;
+            "
           >
             <path
               fill-rule="evenodd"
@@ -189,21 +202,22 @@
             ></path>
           </svg>
         </a>
-        <h3 class="legend-menu legend-list">
+        <h2 class="text-underline legend-menu legend-list">
           <br /><br/<b>How to Play? 💎</b>
-        </h3>
-        <p>
+        </h2>
+        <h3>
+          Navigate Using Arrow Up ⬆️ or Down ⬇️<br /><br />
           Picking up Nasi Lemak and Hibiscus will make you invincible for 3
           seconds.<br /><br />
           Avoid getting hit by fire and Lightning <br /><br />Survive and get
           higher score<br /><br /><br /><br />
-        </p>
+        </h3>
         <div class="legend-menu legend-list">
           <div class="child">
             <small>Nasi Lemak</small><br />
             <img
               src="https://raw.githubusercontent.com/dragonjump/image/main/nasi1.png"
-            /> 
+            />
           </div>
           <div class="child">
             <small> Hibiscus</small><br />
@@ -276,6 +290,11 @@
     <button id="openModalBtn">How to Play? 💎</button>
 
     <canvas class="game-canvas" width="600" height="400"></canvas>
+    <h2 class="game-canvas-control">
+      <br/><br/>
+      Navigate Using <span id="arrowUp" class="text-underline"> Up ⬆️ </span>or
+      <span id="arrowDown" class="text-underline"> Down ⬇️</span><br /><br />
+    </h2>
     <div class="game-over">
       <p>Game Over, roar semangat harimau</p>
       <p>High Score: <span class="high-score"></span></p>
@@ -306,6 +325,8 @@
       const menuImages = document.querySelectorAll(".game-menu img");
       const textMenus = document.querySelectorAll(".text-menu-title");
       const canvas = document.querySelector(".game-canvas");
+      const canvasControl = document.querySelector(".game-canvas-control");
+      canvasControl.style.display = "none";
       const ctx = canvas.getContext("2d");
       const gameOverScreen = document.querySelector(".game-over");
       const highScoreDisplay = document.querySelector(".high-score");
@@ -354,7 +375,7 @@
       }
 
       const touchSomething = (isInvisible) => {
-        if(isGameOver){
+        if (isGameOver) {
           return;
         }
         const audioContext2 = new AudioContext();
@@ -379,6 +400,7 @@
         menuImages.forEach((button) => (button.style.display = "none"));
         // menuLegend.forEach((item) => (item.style.display = "none"));
 
+        canvasControl.style.display = "block";
         canvas.style.display = "block";
         tigerImage.src = tigerImages[tigerIndex];
         window.requestAnimationFrame(gameLoop);
@@ -464,11 +486,12 @@
           ) {
             invincible = true;
             badGuySpeed = 6;
-
+            canvas.style.opacity = "0.5";
             touchSomething(true);
             setTimeout(() => {
               invincible = false;
               badGuySpeed = 3;
+              canvas.style.opacity = "1";
             }, 3300);
           }
         });
@@ -523,6 +546,7 @@
 
       function gameOver() {
         canvas.style.display = "none";
+        canvasControl.style.display = "none"; 
         gameOverScreen.style.display = "block";
         highScoreDisplay.textContent = score;
 
@@ -548,19 +572,31 @@
           startGame(parseInt(button.dataset.tiger) - 1);
         });
       });
-
-      window.addEventListener("keydown", (event) => {
-        if (event.key === "ArrowUp") {
+      function handleEventTigerMove(keyName) {
+        if (keyName === "ArrowUp") {
           tigerY -= tigerSpeed;
           if (tigerY < 0) {
             tigerY = 0;
           }
-        } else if (event.key === "ArrowDown") {
+        } else if (keyName === "ArrowDown") {
           tigerY += tigerSpeed;
           if (tigerY > canvas.height - tigerHeight) {
             tigerY = canvas.height - tigerHeight;
           }
         }
+      }
+
+      window.addEventListener("keydown", (event) => {
+        handleEventTigerMove(event.key);
+      });
+
+      const arrowUp = document.getElementById("arrowUp");
+      arrowUp.addEventListener("click", function () {
+        handleEventTigerMove("ArrowUp");
+      });
+      const arrowDown = document.getElementById("arrowDown");
+      arrowDown.addEventListener("click", function () {
+        handleEventTigerMove("ArrowDown");
       });
     </script>
     <script>
