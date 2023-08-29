@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Malaysia Harimau</title>
+    <title>  Harimau Merdeka  Malaysia</title>
     <style>
       body {
         font-family: cursive;
@@ -354,6 +354,9 @@
       }
 
       const touchSomething = (isInvisible) => {
+        if(isGameOver){
+          return;
+        }
         const audioContext2 = new AudioContext();
         const oscillator = audioContext2.createOscillator();
 
