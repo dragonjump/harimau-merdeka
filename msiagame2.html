@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Malaysia Harimau</title>
+    <style>
+      body {
+        font-family: cursive;
+      }
+      body.flag {
+        background-image: linear-gradient(
+            rgba(255, 255, 255, 0.42),
+            rgba(255, 255, 255, 0.55)
+          ),
+          url(https://github.com/dragonjump/image/blob/main/flag.jpg?raw=true);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        overflow: hidden;
+        /* backdrop-filter: blur(5px);  */
+        /* Adjust the blur radius as needed */
+
+        color: white; /* Set the text color */
+        text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
+          1px 1px 0 black;
+      }
+      body.flag.modal-content {
+        background: rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(30px);
+      }
+      body.flag button {
+        color: white; /* Set the text color */
+        text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
+          1px 1px 0 black;
+      }
+      p,
+      .menu-content,
+      .game-title {
+        text-align: center;
+      }
+      .game-title {
+        font-size: 36px;
+      }
+      .game-menu,
+      .legend-menu {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        overflow-x: auto;
+      }
+
+      .game-menu img,
+      .legend-menu img {
+        width: 300px;
+      }
+      button,
+      .game-menu button,
+      .legend-menu button {
+        font-size: 24px;
+        margin: 10px;
+        cursor: pointer;
+        padding: 10px;
+        background-color: transparent;
+        margin-left: -75px;
+        margin-top: 250px;
+        position: absolute;
+      }
+      #openModalBtn {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+      }
+      .game-canvas {
+        display: none;
+        margin: 0 auto;
+      }
+      .game-over {
+        display: none;
+        text-align: center;
+        font-size: 24px;
+      }
+      .legend-list {
+        margin-top: 3px;
+      }
+      .legend-list img {
+        width: 110px;
+      }
+      /* Modal container */
+      .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.5
+        ); /* Black background with transparency */
+      }
+
+      /* Modal content */
+      .modal-content {
+        background-color: #fefefe;
+        margin: 8.5% auto; /* 20% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* 80% width */
+      }
+
+      /* Close button */
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      /* Define the rotation animation */
+      @keyframes rotate {
+        0% {
+          transform: rotate(-7deg);
+        }
+        50% {
+          transform: rotate(7deg);
+        }
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+
+      /* Apply the rotation animation to the image */
+      .rotate-movement {
+        animation: rotate 3s infinite;
+      }
+
+      [data-tiger]:hover {
+        animation: rotate 3s infinite;
+      }
+
+      /* Define the jump animation */
+      @keyframes jump {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-30px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      /* Apply the jump animation to the element */
+      .jumping {
+        animation: jump 1s infinite;
+      }
+    </style>
+  </head>
+  <body class="flag">
+    <!-- Modal container -->
+    <div id="modal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <a href="https://github.com/dragonjump/harimau-merdeka"  target="_blank">
+          <svg
+            class="github-icon"
+            viewBox="0 0 16 16"
+            version="1.1"
+            aria-hidden="true"
+            style="width: 80px; border-radius: 50%; background: white"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.08.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.58.82-2.14-.08-.2-.36-1.01.08-2.1 0 0 .67-.21 2.2.81.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.02 2.2-.81 2.2-.81.44 1.09.16 1.9.08 2.1.51.56.82 1.27.82 2.14 0 3.07-1.87 3.75-3.65 3.95.29.24.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.14.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+            ></path>
+          </svg>
+        </a>
+        <h3 class="legend-menu legend-list">
+          <br /><br/<b>How to Play? 💎</b>
+        </h3>
+        <p>
+          Picking up Nasi Lemak and Hibiscus will make you invincible for 3
+          seconds.<br /><br />
+          Avoid getting hit by fire and Lightning <br /><br />Survive and get
+          higher score<br /><br /><br /><br />
+        </p>
+        <div class="legend-menu legend-list">
+          <div class="child">
+            <small>Nasi Lemak</small><br />
+            <img
+              src="https://github.com/dragonjump/image/blob/main/nasi1.png?raw=true"
+            />
+          </div>
+          <div class="child">
+            <small> Hibiscus</small><br />
+            <img
+              src="https://github.com/dragonjump/image/blob/main/hibiscus.png?raw=true"
+            />
+          </div>
+
+          <div class="legend-menu legend-list">
+            <div class="child">
+              <small> Fire</small><br />
+              <img
+                src="https://github.com/dragonjump/image/blob/main/badguy1.png?raw=true"
+              />
+            </div>
+            <div class="child">
+              <small> Lightning</small><br />
+              <img
+                src="https://github.com/dragonjump/image/blob/main/badguy2.png?raw=true"
+              />
+            </div>
+          </div>
+          <br />
+          <br />
+        </div>
+      </div>
+    </div>
+    <h1 class="game-title">Malaysia Harimau Merdeka</h1>
+    <p>
+      <img
+        width="135"
+        id="klccIcon"
+        src="https://github.com/dragonjump/image/blob/main/klcc.png?raw=true"
+      />
+    </p>
+
+    <h3 class="game-menu menu-content text-menu-title">
+      <br /><br />
+      <br /><br />Choose Your character
+    </h3>
+    <div class="game-menu character-list">
+      <div class="child">
+        <img
+          class="jumping"
+          data-tiger="1"
+          src="https://github.com/dragonjump/image/blob/main/tiger1.png?raw=true"
+        />
+        <button data-tiger="1">Gira</button>
+      </div>
+      <div class="child">
+        <img
+          class="jumping"
+          data-tiger="2"
+          src="https://github.com/dragonjump/image/blob/main/tiger3.png?raw=true"
+        />
+        <button data-tiger="2">Comot</button>
+      </div>
+      <div class="child">
+        <img
+          class="jumping"
+          data-tiger="3"
+          src="https://github.com/dragonjump/image/blob/main/tiger4.png?raw=true"
+        />
+        <button data-tiger="3">Oyene</button>
+      </div>
+    </div>
+
+    <button id="openModalBtn">How to Play? 💎</button>
+
+    <canvas class="game-canvas" width="600" height="400"></canvas>
+    <div class="game-over">
+      <p>Game Over, roar semangat harimau</p>
+      <p>High Score: <span class="high-score"></span></p>
+      <p>
+        <img
+          class="jumping"
+          src="https://github.com/dragonjump/image/blob/main/tigercry1.png?raw=true"
+        />
+      </p>
+    </div>
+
+    <script>
+      const tigerImages = [
+        "https://github.com/dragonjump/image/blob/main/tiger1.png?raw=true",
+        "https://github.com/dragonjump/image/blob/main/tiger3.png?raw=true",
+        "https://github.com/dragonjump/image/blob/main/tiger4.png?raw=true",
+      ];
+      const powerItemImages = [
+        "https://github.com/dragonjump/image/blob/main/nasi1.png?raw=true",
+        "https://github.com/dragonjump/image/blob/main/hibiscus.png?raw=true",
+      ];
+      const badGuyImages = [
+        "https://github.com/dragonjump/image/blob/main/badguy2.png?raw=true",
+        "https://github.com/dragonjump/image/blob/main/badguy1.png?raw=true",
+      ];
+
+      const menuButtons = document.querySelectorAll(".game-menu button");
+      const menuImages = document.querySelectorAll(".game-menu img");
+      const textMenus = document.querySelectorAll(".text-menu-title");
+      const canvas = document.querySelector(".game-canvas");
+      const ctx = canvas.getContext("2d");
+      const gameOverScreen = document.querySelector(".game-over");
+      const highScoreDisplay = document.querySelector(".high-score");
+
+      let tigerImage,
+        powerItem1Image,
+        powerItem2Image,
+        badGuy1Image,
+        badGuy2Image;
+
+      let tigerX = 50,
+        tigerY = canvas.height - 100;
+      let tigerWidth = 50,
+        tigerHeight = 50;
+      let tigerSpeed = 5;
+
+      let badGuys = [];
+      let badGuyWidth = 50,
+        badGuyHeight = 50;
+      let badGuySpeed = 3;
+
+      let powerItems = [];
+      let powerItemWidth = 60,
+        powerItemHeight = 60;
+
+      let score = 0;
+
+      let invincible = false;
+      let isGameOver = false;
+
+      function preloadImages() {
+        tigerImage = new Image();
+        tigerImage.src = tigerImages[0];
+
+        powerItem1Image = new Image();
+        powerItem1Image.src = powerItemImages[0];
+
+        powerItem2Image = new Image();
+        powerItem2Image.src = powerItemImages[1];
+
+        badGuy1Image = new Image();
+        badGuy1Image.src = badGuyImages[0];
+
+        badGuy2Image = new Image();
+        badGuy2Image.src = badGuyImages[1];
+      }
+
+      const touchSomething = (isInvisible) => {
+        const audioContext2 = new AudioContext();
+        const oscillator = audioContext2.createOscillator();
+
+        oscillator.type = "square";
+        oscillator.frequency.value = !isInvisible ? 100 : 560;
+
+        const gainNode = audioContext2.createGain();
+        gainNode.gain.value = 0.022; // reduce volume by half
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext2.destination);
+
+        oscillator.start();
+        setTimeout(() => oscillator.stop(), 500);
+      };
+
+      function startGame(tigerIndex) {
+        textMenus.forEach((itm) => (itm.style.display = "none"));
+        menuButtons.forEach((button) => (button.style.display = "none"));
+        menuImages.forEach((button) => (button.style.display = "none"));
+        // menuLegend.forEach((item) => (item.style.display = "none"));
+
+        canvas.style.display = "block";
+        tigerImage.src = tigerImages[tigerIndex];
+        window.requestAnimationFrame(gameLoop);
+      }
+
+      function gameLoop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // draw tiger
+        ctx.drawImage(tigerImage, tigerX, tigerY, tigerWidth, tigerHeight);
+
+        // update and draw bad guys
+        badGuys.forEach((badGuy) => {
+          badGuy.x -= badGuySpeed;
+          if (badGuy.type === 1) {
+            ctx.drawImage(
+              badGuy1Image,
+              badGuy.x,
+              badGuy.y,
+              badGuyWidth,
+              badGuyHeight
+            );
+          } else {
+            ctx.drawImage(
+              badGuy2Image,
+              badGuy.x,
+              badGuy.y,
+              badGuyWidth,
+              badGuyHeight
+            );
+          }
+          if (
+            checkCollision(
+              tigerX,
+              tigerY,
+              tigerWidth,
+              tigerHeight,
+              badGuy.x,
+              badGuy.y,
+              badGuyWidth,
+              badGuyHeight
+            )
+          ) {
+            if (!invincible) {
+              touchSomething(false);
+              gameOver();
+            }
+          }
+        });
+        badGuys = badGuys.filter((badGuy) => badGuy.x > -badGuyWidth);
+
+        // update and draw power items
+        powerItems.forEach((powerItem) => {
+          powerItem.x -= 2;
+          if (powerItem.type === 1) {
+            ctx.drawImage(
+              powerItem1Image,
+              powerItem.x,
+              powerItem.y,
+              powerItemWidth,
+              powerItemHeight
+            );
+          } else {
+            ctx.drawImage(
+              powerItem2Image,
+              powerItem.x,
+              powerItem.y,
+              powerItemWidth,
+              powerItemHeight
+            );
+          }
+          if (
+            checkCollision(
+              tigerX,
+              tigerY,
+              tigerWidth,
+              tigerHeight,
+              powerItem.x,
+              powerItem.y,
+              powerItemWidth,
+              powerItemHeight
+            )
+          ) {
+            invincible = true;
+            badGuySpeed = 6;
+
+            touchSomething(true);
+            setTimeout(() => {
+              invincible = false;
+              badGuySpeed = 3;
+            }, 3300);
+          }
+        });
+        powerItems = powerItems.filter(
+          (powerItem) => powerItem.x > -powerItemWidth
+        );
+
+        // add new bad guys and power items
+        if (Math.random() < 0.01) {
+          let randomY = Math.floor(
+            Math.random() * (canvas.height - badGuyHeight)
+          );
+          badGuys.push({
+            x: canvas.width,
+            y: randomY,
+            type: Math.floor(Math.random() * 2) + 1,
+          });
+        }
+        if (Math.random() < 0.005) {
+          let randomY = Math.floor(
+            Math.random() * (canvas.height - powerItemHeight)
+          );
+          powerItems.push({
+            x: canvas.width,
+            y: randomY,
+            type: Math.floor(Math.random() * 2) + 1,
+          });
+        }
+
+        // // update score
+        !isGameOver && score++;
+        ctx.fillText(`Score: ${score}`, 10, 20);
+
+        // add new bad guys and power items
+        if (Math.random() < 0.01) {
+          badGuys.push({
+            x: canvas.width,
+            y: canvas.height - badGuyHeight,
+            type: Math.floor(Math.random() * 2) + 1,
+          });
+        }
+        if (Math.random() < 0.005) {
+          powerItems.push({
+            x: canvas.width,
+            y: canvas.height - powerItemHeight,
+            type: Math.floor(Math.random() * 2) + 1,
+          });
+        }
+
+        window.requestAnimationFrame(gameLoop);
+      }
+
+      function gameOver() {
+        canvas.style.display = "none";
+        gameOverScreen.style.display = "block";
+        highScoreDisplay.textContent = score;
+
+        document.body.classList.add("flag");
+        isGameOver = true;
+      }
+
+      function checkCollision(x1, y1, w1, h1, x2, y2, w2, h2) {
+        return x1 < x2 + w2 && x1 + w1 > x2 && y1 < y2 + h2 && y1 + h1 > y2;
+      }
+
+      preloadImages();
+
+      menuImages.forEach((button) => {
+        button.addEventListener("click", () => {
+          playTheme();
+          startGame(parseInt(button.dataset.tiger) - 1);
+        });
+      });
+      menuButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          playTheme();
+          startGame(parseInt(button.dataset.tiger) - 1);
+        });
+      });
+
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowUp") {
+          tigerY -= tigerSpeed;
+          if (tigerY < 0) {
+            tigerY = 0;
+          }
+        } else if (event.key === "ArrowDown") {
+          tigerY += tigerSpeed;
+          if (tigerY > canvas.height - tigerHeight) {
+            tigerY = canvas.height - tigerHeight;
+          }
+        }
+      });
+    </script>
+    <script>
+      const playTheme = () => {
+        const audioContext = new AudioContext();
+        const gainNode = audioContext.createGain();
+        gainNode.gain.value = 0.025;
+        gainNode.connect(audioContext.destination);
+
+        const notes = [
+          { note: "C4", duration: 0.5 },
+          { note: "C4", duration: 0.5 },
+          { note: "F4", duration: 0.5 },
+          { note: "A4", duration: 0.5 },
+          { note: "F4", duration: 0.5 },
+          { note: "F4", duration: 0.5 },
+          { note: "C4", duration: 0.5 },
+          { note: "A4", duration: 0.5 },
+          { note: "F4", duration: 0.5 },
+          { note: "E4", duration: 0.5 },
+          { note: "F4", duration: 0.5 },
+          { note: "G4", duration: 0.5 },
+          { note: "C4", duration: 0.5 },
+          { note: "E4", duration: 0.5 },
+          { note: "F4", duration: 0.5 },
+          { note: "G4", duration: 0.5 },
+          { note: "A4", duration: 0.5 },
+          { note: "B4", duration: 0.5 },
+          { note: "D5", duration: 0.5 },
+          { note: "C5", duration: 1 },
+          { note: "B4", duration: 0.5 },
+          { note: "A4", duration: 0.5 },
+          { note: "C4", duration: 0.5 },
+          { note: "F4", duration: 0.5 },
+          { note: "A4", duration: 0.5 },
+          { note: "C5", duration: 0.5 },
+          { note: "A4", duration: 0.5 },
+          { note: "B4", duration: 0.5 },
+          { note: "A4", duration: 0.5 },
+          { note: "B4", duration: 0.5 },
+          { note: "C5", duration: 0.5 },
+          { note: "D5", duration: 0.5 },
+          { note: "A4", duration: 0.5 },
+          { note: "B4", duration: 0.5 },
+          { note: "D5", duration: 0.5 },
+          { note: "C5", duration: 0.5 },
+          { note: "G4", duration: 0.5 },
+          { note: "C5", duration: 0.5 },
+          { note: "B4", duration: 0.5 },
+          { note: "A#4", duration: 0.5 },
+          { note: "G4", duration: 0.5 },
+          { note: "A4", duration: 1 },
+        ];
+
+        let startTime = audioContext.currentTime + 0.1;
+        const noteLength = 0.3;
+
+        notes.forEach((note) => {
+          playNote(note.note, startTime, note.duration * noteLength);
+          startTime += note.duration * noteLength;
+        });
+
+        function playNote(note, startTime, duration) {
+          const oscillator = audioContext.createOscillator();
+          oscillator.type = "square";
+          oscillator.frequency.value = getFrequency(note);
+          oscillator.connect(gainNode);
+          oscillator.start(startTime);
+          oscillator.stop(startTime + duration);
+        }
+
+        function getFrequency(note) {
+          const noteFrequencies = {
+            "A#4": 466.16,
+            A4: 440.0,
+            B4: 493.88,
+            C4: 261.63,
+            C5: 523.25,
+            D5: 587.33,
+            E4: 329.63,
+            F4: 349.23,
+            G4: 392.0,
+          };
+          return noteFrequencies[note];
+        }
+      };
+    </script>
+
+    <script>
+      const toggleElement = document.getElementById("klccIcon");
+      toggleElement.addEventListener("click", function () {
+        document.body.classList.toggle("flag");
+      });
+
+      // Get the modal element
+      const modal = document.getElementById("modal");
+
+      // Get the button that opens the modal
+      const openModalBtn = document.getElementById("openModalBtn");
+
+      // Get the close button element
+      const closeBtn = document.getElementsByClassName("close")[0];
+
+      // Function to open the modal
+      function openModal() {
+        modal.style.display = "block";
+      }
+
+      // Function to close the modal
+      function closeModal() {
+        modal.style.display = "none";
+      }
+
+      // Event listener to open the modal when the button is clicked
+      openModalBtn.addEventListener("click", openModal);
+
+      // Event listener to close the modal when the close button is clicked
+      closeBtn.addEventListener("click", closeModal);
+
+      // Event listener to close the modal when the user clicks outside the modal
+      window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+          closeModal();
+        }
+      });
+    </script>
+  </body>
+</html>
