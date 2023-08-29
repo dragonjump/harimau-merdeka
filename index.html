@@ -11,7 +11,7 @@
             rgba(255, 255, 255, 0.42),
             rgba(255, 255, 255, 0.55)
           ),
-          url(https://github.com/dragonjump/image/blob/main/flag.jpg?raw=true);
+          url(https://raw.githubusercontent.com/dragonjump/image/main/flag.jpg);
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
@@ -109,6 +109,7 @@
         padding: 20px;
         border: 1px solid #888;
         width: 80%; /* 80% width */
+        padding-bottom: 60px;
       }
 
       /* Close button */
@@ -173,13 +174,14 @@
       <!-- Modal content -->
       <div class="modal-content">
         <span class="close">&times;</span>
-        <a href="https://github.com/dragonjump/harimau-merdeka"  target="_blank">
-          <svg
+        <a  href="https://github.com/dragonjump/harimau-merdeka"  target="_blank">
+          <svg 
             class="github-icon"
             viewBox="0 0 16 16"
             version="1.1"
             aria-hidden="true"
-            style="width: 80px; border-radius: 50%; background: white"
+            style="width: 80px; border-radius: 50%; background: white;
+            border: solid transparent;"
           >
             <path
               fill-rule="evenodd"
@@ -200,13 +202,13 @@
           <div class="child">
             <small>Nasi Lemak</small><br />
             <img
-              src="https://github.com/dragonjump/image/blob/main/nasi1.png?raw=true"
-            />
+              src="https://raw.githubusercontent.com/dragonjump/image/main/nasi1.png"
+            /> 
           </div>
           <div class="child">
             <small> Hibiscus</small><br />
             <img
-              src="https://github.com/dragonjump/image/blob/main/hibiscus.png?raw=true"
+              src="https://raw.githubusercontent.com/dragonjump/image/main/hibiscus.png"
             />
           </div>
 
@@ -214,16 +216,18 @@
             <div class="child">
               <small> Fire</small><br />
               <img
-                src="https://github.com/dragonjump/image/blob/main/badguy1.png?raw=true"
+                src="https://raw.githubusercontent.com/dragonjump/image/main/badguy1.png"
               />
             </div>
             <div class="child">
               <small> Lightning</small><br />
               <img
-                src="https://github.com/dragonjump/image/blob/main/badguy2.png?raw=true"
+                src="https://raw.githubusercontent.com/dragonjump/image/main/badguy2.png"
               />
             </div>
           </div>
+          <br />
+          <br />
           <br />
           <br />
         </div>
@@ -234,7 +238,7 @@
       <img
         width="135"
         id="klccIcon"
-        src="https://github.com/dragonjump/image/blob/main/klcc.png?raw=true"
+        src="https://raw.githubusercontent.com/dragonjump/image/main/klcc.png"
       />
     </p>
 
@@ -247,7 +251,7 @@
         <img
           class="jumping"
           data-tiger="1"
-          src="https://github.com/dragonjump/image/blob/main/tiger1.png?raw=true"
+          src="https://raw.githubusercontent.com/dragonjump/image/main/tiger1.png"
         />
         <button data-tiger="1">Gira</button>
       </div>
@@ -255,7 +259,7 @@
         <img
           class="jumping"
           data-tiger="2"
-          src="https://github.com/dragonjump/image/blob/main/tiger3.png?raw=true"
+          src="https://raw.githubusercontent.com/dragonjump/image/main/tiger3.png"
         />
         <button data-tiger="2">Comot</button>
       </div>
@@ -263,7 +267,7 @@
         <img
           class="jumping"
           data-tiger="3"
-          src="https://github.com/dragonjump/image/blob/main/tiger4.png?raw=true"
+          src="https://raw.githubusercontent.com/dragonjump/image/main/tiger4.png"
         />
         <button data-tiger="3">Oyene</button>
       </div>
@@ -278,24 +282,24 @@
       <p>
         <img
           class="jumping"
-          src="https://github.com/dragonjump/image/blob/main/tigercry1.png?raw=true"
+          src="https://raw.githubusercontent.com/dragonjump/image/main/tigercry1.png"
         />
       </p>
     </div>
 
     <script>
       const tigerImages = [
-        "https://github.com/dragonjump/image/blob/main/tiger1.png?raw=true",
-        "https://github.com/dragonjump/image/blob/main/tiger3.png?raw=true",
-        "https://github.com/dragonjump/image/blob/main/tiger4.png?raw=true",
+        "https://raw.githubusercontent.com/dragonjump/image/main/tiger1.png",
+        "https://raw.githubusercontent.com/dragonjump/image/main/tiger3.png",
+        "https://raw.githubusercontent.com/dragonjump/image/main/tiger4.png",
       ];
       const powerItemImages = [
-        "https://github.com/dragonjump/image/blob/main/nasi1.png?raw=true",
-        "https://github.com/dragonjump/image/blob/main/hibiscus.png?raw=true",
+        "https://raw.githubusercontent.com/dragonjump/image/main/nasi1.png",
+        "https://raw.githubusercontent.com/dragonjump/image/main/hibiscus.png",
       ];
       const badGuyImages = [
-        "https://github.com/dragonjump/image/blob/main/badguy2.png?raw=true",
-        "https://github.com/dragonjump/image/blob/main/badguy1.png?raw=true",
+        "https://raw.githubusercontent.com/dragonjump/image/main/badguy2.png",
+        "https://raw.githubusercontent.com/dragonjump/image/main/badguy1.png",
       ];
 
       const menuButtons = document.querySelectorAll(".game-menu button");
