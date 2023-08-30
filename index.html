@@ -2,14 +2,113 @@
 <html>
   <head>
     <title>Harimau Merdeka Malaysia</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
     <style>
+      h1 {
+        font-size: 2.5rem; /* Equivalent to 40px assuming 16px as base */
+      }
+
+      h2 {
+        font-size: 2rem; /* Equivalent to 32px assuming 16px as base */
+      }
+
+      h3 {
+        font-size: 1.5rem; /* Equivalent to 24px assuming 16px as base */
+      }
+
+      h4 {
+        font-size: 1.25rem; /* Equivalent to 20px assuming 16px as base */
+      }
+
+      h5 {
+        font-size: 1rem; /* Equivalent to 16px assuming 16px as base */
+      }
+
+      h6 {
+        font-size: 0.875rem; /* Equivalent to 14px assuming 16px as base */
+      }
+
+    /* Define the animation */
+    @keyframes flip-move {
+      0% {
+        transform: translateX(0)  scaleX( 1);
+      }
+      10% {
+        transform: translateX( 10px) scaleX( 1);
+      }
+      15% {
+        transform: translateX( 15px) scaleX( 1);
+      }
+     20% {
+        transform: translateX( 20px) scaleX( 1);
+      }
+     35% {
+        transform: translateX( 25px) scaleX(-1);
+      }
+      40% {
+        transform: translateX(20px) scaleX(-1);
+      } 
+
+      60% {
+        transform: translateX(15px) scaleX(-1);
+      } 
+      80% {
+        transform: translateX(10px) scaleX(-1);
+      } 
+    }
+    .flip-moving {
+   
+      animation: flip-move 4s linear infinite;
+    }
+      /* Styles for mobile devices */
+      @media only screen and (max-width: 768px) {
+        #openModalBtn {
+          display: none;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+
+        h2 {
+          font-size: 1.8rem;
+        }
+
+        h3 {
+          font-size: 1.6rem;
+        }
+
+        h4 {
+          font-size: 1.4rem;
+        }
+
+        h5 {
+          font-size: 1.2rem;
+        }
+
+        h6 {
+          font-size: 1rem;
+        }
+      }
       body {
         font-family: cursive;
         touch-action: manipulation;
+
+        -webkit-user-select: none; /* Safari */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE 10+ */
+        user-select: none;
+
+        overflow-y: scroll;
+        overflow-x: hidden;
       }
-      img{
+      img {
         cursor: pointer;
       }
+
       body.flag {
         background-image: linear-gradient(
             rgba(255, 255, 255, 0.42),
@@ -19,13 +118,21 @@
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
-        overflow: hidden;
-        /* backdrop-filter: blur(5px);  */
+        overflow-y: scroll;
+        overflow-x: hidden;
+        width: 100vw;
+        height: 100vh;
+        margin-top: -5%;
+        padding-top: 5%;
         /* Adjust the blur radius as needed */
 
+        backdrop-filter: blur(5px);
         color: white; /* Set the text color */
         text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
           1px 1px 0 black;
+      }
+      .backdrop-filter-blur {
+        backdrop-filter: blur(45px) !important;
       }
       body.flag .modal-content {
         background: rgba(0, 0, 0, 0.45);
@@ -36,6 +143,10 @@
         text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
           1px 1px 0 black;
       }
+      .game-title {
+        text-shadow: -0.5px -0.5px 0 black, 0px 0px 0 black, -0.5px 1px 0 black,
+          0.4px 0.3px 0 black;
+      }
       p,
       h3,
       h4,
@@ -44,9 +155,10 @@
       .game-title {
         text-align: center;
       }
-      .game-title {
+      /* .game-title {
         font-size: 36px;
-      }
+        font-size: x-large;
+      } */
       .game-menu,
       .legend-menu {
         display: flex;
@@ -54,29 +166,33 @@
         flex-direction: row;
         overflow-x: auto;
       }
+      .legend-menu {
+        justify-content: left;
+      }
       .text-underline {
         text-decoration: underline;
       }
       .game-menu img,
       .legend-menu img {
-        width: 300px;
+        width: 115px;
       }
       button,
       .game-menu button,
       .legend-menu button {
-        font-size: 24px;
+        font-size: 22px;
         margin: 10px;
         cursor: pointer;
         padding: 10px;
         background-color: transparent;
-        margin-left: -75px;
-        margin-top: 250px;
-        position: absolute;
       }
       #openModalBtn {
         position: fixed;
-        bottom: 10px;
+        bottom: 3x;
         right: 10px;
+        font-size: small;
+
+        bottom: 3.55%;
+        right: 2%;
       }
       .game-canvas {
         display: none;
@@ -151,7 +267,7 @@
 
       /* Apply the rotation animation to the image */
       .rotate-movement {
-        animation: rotate 3s infinite;
+        animation: rotate 1s infinite;
       }
 
       [data-tiger]:hover {
@@ -159,12 +275,23 @@
       }
 
       /* Define the jump animation */
+      @keyframes jump2 {
+        0% {
+          transform: translateY(0);
+        }
+        60% {
+          transform: translateY(-15px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
       @keyframes jump {
         0% {
           transform: translateY(0);
         }
         50% {
-          transform: translateY(-30px);
+          transform: translateY(-15px);
         }
         100% {
           transform: translateY(0);
@@ -175,58 +302,64 @@
       .jumping {
         animation: jump 1s infinite;
       }
+      .jumping2 {
+        animation: jump2 1s infinite;
+      }
     </style>
   </head>
   <body class="flag">
-    <!-- Modal container -->
-    <div id="modal" class="modal">
-      <!-- Modal content -->
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <a href="https://github.com/dragonjump/harimau-merdeka" target="_blank">
-          <svg
-            class="github-icon"
-            viewBox="0 0 16 16"
-            version="1.1"
-            aria-hidden="true"
-            style="
-              width: 80px;
-              border-radius: 50%;
-              background: white;
-              border: solid transparent;
-            "
+    <div class="main-wrapper">
+      <!-- Modal container -->
+      <div id="modal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <a
+            href="https://github.com/dragonjump/harimau-merdeka"
+            target="_blank"
           >
-            <path
-              fill-rule="evenodd"
-              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.08.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.58.82-2.14-.08-.2-.36-1.01.08-2.1 0 0 .67-.21 2.2.81.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.02 2.2-.81 2.2-.81.44 1.09.16 1.9.08 2.1.51.56.82 1.27.82 2.14 0 3.07-1.87 3.75-3.65 3.95.29.24.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.14.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"
-            ></path>
-          </svg>
-        </a>
-        <h2 class="text-underline legend-menu legend-list">
-          <br /><br/<b>How to Play? 💎</b>
-        </h2>
-        <h3>
-          Navigate Using Arrow Up ⬆️ or Down ⬇️<br /><br />
-          Picking up Nasi Lemak and Hibiscus will make you invincible for 3
-          seconds.<br /><br />
-          Avoid getting hit by fire and Lightning <br /><br />Survive and get
-          higher score<br /><br /><br /><br />
-        </h3>
-        <div class="legend-menu legend-list">
-          <div class="child">
-            <small>Nasi Lemak</small><br />
-            <img
-              src="https://raw.githubusercontent.com/dragonjump/image/main/nasi1.png"
-            />
-          </div>
-          <div class="child">
-            <small> Hibiscus</small><br />
-            <img
-              src="https://raw.githubusercontent.com/dragonjump/image/main/hibiscus.png"
-            />
-          </div>
-
+            <svg
+              class="github-icon"
+              viewBox="0 0 16 16"
+              version="1.1"
+              aria-hidden="true"
+              style="
+                width: 45px;
+                border-radius: 50%;
+                background: white;
+                border: solid transparent;
+              "
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.08.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.58.82-2.14-.08-.2-.36-1.01.08-2.1 0 0 .67-.21 2.2.81.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.02 2.2-.81 2.2-.81.44 1.09.16 1.9.08 2.1.51.56.82 1.27.82 2.14 0 3.07-1.87 3.75-3.65 3.95.29.24.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.14.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+              ></path>
+            </svg>
+          </a>
+          <h2 class="text-underline legend-menu legend-list">
+            <br /><br/<b>How to Play? 💎</b>
+          </h2>
+          <h6>
+            Navigate Using Arrow Up ⬆️ or Down ⬇️<br /><br />
+            Picking up Nasi Lemak and Hibiscus will make you invincible for 3
+            seconds.<br /><br />
+            Avoid getting hit by fire and Lightning <br /><br />Survive and get
+            higher score<br /><br /><br /><br />
+          </h6>
           <div class="legend-menu legend-list">
+            <div class="child">
+              <small>Nasi Lemak</small><br />
+              <img
+                src="https://raw.githubusercontent.com/dragonjump/image/main/nasi1.png"
+              />
+            </div>
+            <div class="child">
+              <small> Hibiscus</small><br />
+              <img
+                src="https://raw.githubusercontent.com/dragonjump/image/main/hibiscus.png"
+              />
+            </div>
+
             <div class="child">
               <small> Fire</small><br />
               <img
@@ -246,66 +379,88 @@
           <br />
         </div>
       </div>
-    </div>
-    <h1 class="game-title">Malaysia Harimau Merdeka</h1>
-    <p>
-      <img
-        width="135"
-        id="klccIcon"
-        src="https://raw.githubusercontent.com/dragonjump/image/main/klcc.png"
-      />
-    </p>
 
-    <h3 class="game-menu menu-content text-menu-title">
-      <br /><br />
-      <br /><br />Choose Your character
-    </h3>
-    <div class="game-menu character-list">
-      <div class="child">
+      <h1 class="game-title">
+        H
         <img
-          class="jumping"
-          data-tiger="1"
-          src="https://raw.githubusercontent.com/dragonjump/image/main/tiger1.png"
+          style="width: 65px; margin: -12px"
+          src="https://raw.githubusercontent.com/dragonjump/image/main/tiger2.png"
         />
-        <button data-tiger="1">Gira</button>
-      </div>
-      <div class="child">
-        <img
-          class="jumping"
-          data-tiger="2"
-          src="https://raw.githubusercontent.com/dragonjump/image/main/tiger3.png"
-        />
-        <button data-tiger="2">Comot</button>
-      </div>
-      <div class="child">
-        <img
-          class="jumping"
-          data-tiger="3"
-          src="https://raw.githubusercontent.com/dragonjump/image/main/tiger4.png"
-        />
-        <button data-tiger="3">Oyene</button>
-      </div>
-    </div>
-
-    <button id="openModalBtn">How to Play? 💎</button>
-
-    <canvas class="game-canvas" width="600" height="400"></canvas>
-    <h2 class="game-canvas-control">
-      <br/><br/>
-      Navigate Using <span id="arrowUp" class="text-underline"> Up ⬆️ </span>or
-      <span id="arrowDown" class="text-underline"> Down ⬇️</span><br /><br />
-    </h2>
-    <div class="game-over">
-      <p>Game Over, roar semangat harimau</p>
-      <p>High Score: <span class="high-score"></span></p>
+        rimau Merdeka
+      </h1>
+      <h3 class="game-title">Freedom Tiger</h3>
       <p>
         <img
-          class="jumping"
-          src="https://raw.githubusercontent.com/dragonjump/image/main/tigercry1.png"
+          class="flip-moving"
+          src="https://raw.githubusercontent.com/dragonjump/image/main/tiger1.png"
+          style="
+            width: 45px;
+            position: absolute;
+            display: inline;
+            margin-top: 110px;
+            margin-left: 55px;
+          "
+        /><img
+          width="155"
+          id="klccIcon"
+          src="https://raw.githubusercontent.com/dragonjump/image/main/klcc.png"
         />
+        <br/><br/>
       </p>
-    </div>
 
+      <!-- <h5 class="game-menu menu-content text-menu-title">
+      Choose Your character
+    </h5> -->
+      <div class="game-menu character-list">
+        <div class="child">
+          <img
+            class="jumping"
+            data-tiger="1"
+            src="https://raw.githubusercontent.com/dragonjump/image/main/tiger1.png"
+          />
+          <button data-tiger="1">Gira</button>
+        </div>
+        <div class="child">
+          <img
+            class="jumping2"
+            data-tiger="2"
+            src="https://raw.githubusercontent.com/dragonjump/image/main/tiger3.png"
+          />
+          <button data-tiger="2">Comot</button>
+        </div>
+        <div class="child">
+          <img
+            class="jumping"
+            data-tiger="3"
+            src="https://raw.githubusercontent.com/dragonjump/image/main/tiger4.png"
+          />
+          <button data-tiger="3">Oyene</button>
+        </div>
+      </div>
+
+      <button id="openModalBtn">How to Play? 💎</button>
+
+      <canvas class="game-canvas" width="600" height="400"></canvas>
+
+      <h2 class="game-canvas-control">
+        <span id="arrowUp"> Up ⬆️ </span> &nbsp; &nbsp; &nbsp;<span
+          id="arrowDown"
+        >
+          Down ⬇️</span
+        ><br /><br />
+      </h2>
+      <div class="game-over">
+        <p>Game Over, roar semangat harimau</p>
+        <p>High Score: <span class="high-score"></span></p>
+        <p>
+          <img
+            class="jumping"
+            width="245px"
+            src="https://raw.githubusercontent.com/dragonjump/image/main/tigercry1.png"
+          />
+        </p>
+      </div>
+    </div>
     <script>
       const tigerImages = [
         "https://raw.githubusercontent.com/dragonjump/image/main/tiger1.png",
@@ -339,9 +494,9 @@
 
       let tigerX = 50,
         tigerY = canvas.height - 100;
-      let tigerWidth = 50,
-        tigerHeight = 50;
-      let tigerSpeed = 5;
+      let tigerWidth = 48,
+        tigerHeight = 48;
+      let tigerSpeed = 6;
 
       let badGuys = [];
       let badGuyWidth = 50,
@@ -360,6 +515,8 @@
       function preloadImages() {
         tigerImage = new Image();
         tigerImage.src = tigerImages[0];
+        tigerImage.classList.add("rotate-movement");
+        console.log(tigerImage);
 
         powerItem1Image = new Image();
         powerItem1Image.src = powerItemImages[0];
@@ -391,7 +548,7 @@
         gainNode.connect(audioContext2.destination);
 
         oscillator.start();
-        setTimeout(() => oscillator.stop(), 500);
+        setTimeout(() => oscillator.stop(), 200);
       };
 
       function startGame(tigerIndex) {
@@ -409,6 +566,9 @@
       function gameLoop() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        tigerImage.width = `0px`;
+
+        // tigerImage.classList.add('rotate-movement')
         // draw tiger
         ctx.drawImage(tigerImage, tigerX, tigerY, tigerWidth, tigerHeight);
 
@@ -432,7 +592,7 @@
               badGuyHeight
             );
           }
-          if (
+          if ( 
             checkCollision(
               tigerX,
               tigerY,
@@ -546,7 +706,7 @@
 
       function gameOver() {
         canvas.style.display = "none";
-        canvasControl.style.display = "none"; 
+        canvasControl.style.display = "none";
         gameOverScreen.style.display = "block";
         highScoreDisplay.textContent = score;
 
@@ -688,7 +848,8 @@
     <script>
       const toggleElement = document.getElementById("klccIcon");
       toggleElement.addEventListener("click", function () {
-        document.body.classList.toggle("flag");
+        // document.body.classList.toggle("flag");
+        location.href = location.href + "?=1";
       });
 
       // Get the modal element
@@ -722,6 +883,9 @@
           closeModal();
         }
       });
+      setTimeout(() => {
+        document.body.classList.add("backdrop-filter-blur");
+      }, 1800);
     </script>
   </body>
 </html>
