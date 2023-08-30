@@ -538,9 +538,7 @@
       }
 
       const touchSomething = (isInvisible) => {
-        if (isGameOver) {
-          return;
-        }
+       
         const audioContext2 = new AudioContext();
         const oscillator = audioContext2.createOscillator();
 
@@ -725,8 +723,7 @@
       }
 
       preloadImages();
-
-      playTheme();
+ 
       menuImages.forEach((button) => {
         button.addEventListener("click", () => {
           startGame(parseInt(button.dataset.tiger) - 1);
